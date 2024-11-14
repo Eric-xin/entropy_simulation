@@ -5,6 +5,7 @@
 This project simulates the behavior of particles in a two-dimensional box. The simulation considers various physical properties and interactions, including entropy, temperature, and collisions. The primary goal is to study the evolution of these properties over time.
 
 ## Table of Contents <!-- omit in toc -->
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Physics Considerations](#physics-considerations)
@@ -24,6 +25,7 @@ This project simulates the behavior of particles in a two-dimensional box. The s
 ## Installation
 
 To run this project, you need to have Python installed along with the following libraries:
+
 - NumPy
 - Matplotlib
 
@@ -47,6 +49,8 @@ To run the simulation, execute the simulation.py script:
 python simulation.py
 ```
 
+Parameters such as the number of particles, box size, initial temperature, dissipation constant, and simulation time can be adjusted in the script.
+
 ## Physics Considerations
 
 ### Entropy
@@ -56,6 +60,7 @@ Entropy is a measure of the disorder or randomness in a system. In this simulati
 $$ S = k_B \ln W $$
 
 where:
+
 - $S$ is the entropy,
 - $k_B$ is the Boltzmann constant,
 - $W$ is the number of microstates.
@@ -64,9 +69,10 @@ where:
 
 Temperature is a measure of the average kinetic energy of the particles. We calculate the temperature based on the velocities of the particles:
 
-$$ T = \frac{2}{3Nk_B} \sum_{i=1}^{N} \frac{1}{2} m v_i^2 $$
+$$ T = \frac{2}{3Nk*B} \sum*{i=1}^{N} \frac{1}{2} m v_i^2 $$
 
 where:
+
 - $T$ is the temperature,
 - $N$ is the number of particles,
 - $k_B$ is the Boltzmann constant,
@@ -79,95 +85,94 @@ Collisions between particles are handled using elastic collision principles. Whe
 
 1. **Distance Calculation**:
    We first calculate the distance between each pair of particles to check if they are colliding. A collision is detected if the distance between the centers of two particles is less than twice the particle radius:
-   
-   $$
+
+   $`
    \text{dist} = \sqrt{(x_i - x_j)^2 + (y_i - y_j)^2}
-   $$
-   
+   `$
+
    where $(x_i, y_i)$ and $(x_j, y_j)$ are the positions of particles $i$ and $j$, respectively.
 
 2. **Collision Angle**:
    If a collision is detected, we calculate the collision angle $\theta$ using the arctangent of the difference in positions:
-   
-   $$
+
+   $`
    \theta = \arctan2(y_i - y_j, x_i - x_j)
-   $$
+   `$
 
 3. **Velocity Rotation**:
    We rotate the velocities of the colliding particles to the collision frame. This simplifies the calculations by aligning the collision axis with one of the coordinate axes. The rotation matrix $R$ is given by:
-   
-   $$
+
+   $`
    R = \begin{bmatrix}
    \cos(\theta) & -\sin(\theta) \\
    \sin(\theta) & \cos(\theta)
    \end{bmatrix}
-   $$
-   
+   `$
+
    The rotated velocities $\mathbf{v}_i'$ and $\mathbf{v}_j'$ are obtained by:
-   
-   $$
+
+   $`
    \mathbf{v}_i' = R \mathbf{v}_i
-   $$
-   $$
+   `$
+   $`
    \mathbf{v}_j' = R \mathbf{v}_j
-   $$
+   `$
 
 4. **Elastic Collision in 1D**:
    In the collision frame, we perform an elastic collision calculation in one dimension. The new velocities after the collision are:
-   
-   $$
+
+   $`
    v_{i,x}' = v_{j,x}'
-   $$
-   $$
+   `$
+   $`
    v_{j,x}' = v_{i,x}'
-   $$
-   
+   `$
+
    where $v_{i,x}'$ and $v_{j,x}'$ are the x-components of the rotated velocities.
 
 5. **Velocity Rotation Back**:
    We rotate the velocities back to the original frame using the inverse of the rotation matrix:
-   
-   $$
+
+   $`
    \mathbf{v}_i = R^{-1} \mathbf{v}_i'
-   $$
-   $$
+   `$
+   $`
    \mathbf{v}_j = R^{-1} \mathbf{v}_j'
-   $$
+   `$
 
 6. **Energy Dissipation**:
    To account for non-ideal collisions, we introduce a dissipation constant $\gamma$. The energy dissipated during the collision is:
-   
-   $$
+
+   $`
    E_{\text{dissipated}} = \frac{1}{2} \gamma (v_{i,x}'^2 + v_{i,y}'^2 + v_{j,x}'^2 + v_{j,y}'^2)
-   $$
-   
+   `$
+
    The velocities are then adjusted to reflect the energy loss:
-   
-   $$
+
+   $`
    \mathbf{v}_i = (1 - \gamma) \mathbf{v}_i
-   $$
-   $$
+   `$
+   $`
    \mathbf{v}_j = (1 - \gamma) \mathbf{v}_j
-   $$
+   `$
 
 7. **Thermal Velocity Adjustment**:
    Finally, we adjust the velocities based on the environmental temperature to simulate thermal effects. The thermal velocity $v_{\text{thermal}}$ is given by:
-   
-   $$
-   v_{\text{thermal}} = \sqrt{\frac{k_B T}{m}}
-   $$
-   
-   where $k_B$ is the Boltzmann constant, $T$ is the temperature, and $m$ is the mass of a particle. The velocities are adjusted by adding a random component:
-   
-   $$
-   \mathbf{v}_i += \mathcal{N}(0, v_{\text{thermal}} \gamma)
-   $$
-   $$
-   \mathbf{v}_j += \mathcal{N}(0, v_{\text{thermal}} \gamma)
-   $$
-   
-   where $\mathcal{N}(0, \sigma)$ represents a normal distribution with mean 0 and standard deviation $\sigma$.
 
+   $`
+   v_{\text{thermal}} = \sqrt{\frac{k_B T}{m}}
+   `$
+
+   where $k_B$ is the Boltzmann constant, $T$ is the temperature, and $m$ is the mass of a particle. The velocities are adjusted by adding a random component:
+
+   $`
+   \mathbf{v}_i += \mathcal{N}(0, v_{\text{thermal}} \gamma)
+   `$
+   $`
+   \mathbf{v}_j += \mathcal{N}(0, v_{\text{thermal}} \gamma)
+   `$
+
+   where $\mathcal{N}(0, \sigma)$ represents a normal distribution with mean 0 and standard deviation $\sigma$.
 
 ### Energy Dissipation
 
@@ -202,6 +207,7 @@ sim.run_simulation(num_steps=100, dt=0.1)
 ## Output
 
 The simulation generates the following outputs:
+
 - `particle_simulation.mp4`: An animation of the particle movements.
 - `entropy_curve.png`: A plot of entropy vs. time.
 - `temperature_curve.png`: A plot of temperature vs. time.
@@ -210,6 +216,7 @@ The simulation generates the following outputs:
 ## Results
 
 This sample result is generated with the following parameters:
+
 - Number of particles: 100
 - Box size: 100
 - Initial temperature: 10 K
@@ -231,7 +238,6 @@ The entropy, temperature, and collision plots are shown below:
 ![Collision Curve](assets/collision_curve.png)
 
 ![Temperature Curve](assets/temperature_curve.png)
-
 
 ## Conclusion
 
