@@ -60,21 +60,26 @@ Parameters such as the number of particles, box size, initial temperature, dissi
 
 Entropy is a measure of the disorder or randomness in a system. In this simulation, we calculate the entropy from the kinetic energy of the particles:
 
-$$ Kinetics Energy (E_k) = \sum_{i=1}^{N} \frac{1}{2} m v_i^2 $$
+$$ Kinetics Energy (E*k) = \sum*{i=1}^{N} \frac{1}{2} m v_i^2 $$
 
 $$ Entropy = \frac{1}{2} k_B \log\left(\frac{2\pi e m}{h^2}\right) + \frac{3}{2} k_B \log\left(\frac{E_k}{N}\right) $$
+
 ### Temperature
 
 Temperature is a measure of the average kinetic energy of the particles in a system. In the context of our simulation, each particle has its own kinetic energy, which is calculated as:
 
 $$
+`
 E_k = \frac{1}{2} m v^2
+`
 $$
 
 where \( m \) is the mass of the particle and \( v \) is its velocity. The temperature \( T \) of the system can be derived from the average kinetic energy of the particles using the relation:
 
 $$
+`
 T = \frac{2}{3k_B} \left\langle E_k \right\rangle
+`
 $$
 
 where \( k_B \) is the Boltzmann constant and \( \left\langle E_k \right\rangle \) is the average kinetic energy of the particles. In the code, this is implemented in the `update_kinetic_energy_and_temperature` method of the `Particle` class:
@@ -92,26 +97,25 @@ Thermodynamics and statistical mechanics provide the theoretical framework for u
 1. **Kinetic Theory of Gases**:
    The kinetic theory relates the macroscopic properties of gases, such as pressure and temperature, to the microscopic motion of particles. The pressure \( P \) of an ideal gas is given by:
 
-   $$
+   $`
    P = \frac{N k_B T}{V}
-   $$
+   `$
 
    where \( N \) is the number of particles, \( T \) is the temperature, and \( V \) is the volume of the container.
 
 2. **Boltzmann Distribution**:
    The velocities of particles in a system at thermal equilibrium follow the Maxwell-Boltzmann distribution. The probability \( P(v) \) of finding a particle with velocity \( v \) is:
 
-   $$
+   $`
    P(v) = \left( \frac{m}{2 \pi k_B T} \right)^{3/2} \exp\left( -\frac{m v^2}{2 k_B T} \right)
-   $$
+   `$
 
 3. **Equipartition Theorem**:
    The equipartition theorem states that each degree of freedom contributes \( \frac{1}{2} k_B T \) to the total energy. For a system with \( f \) degrees of freedom, the total kinetic energy \( E \) is:
 
-   $$
+   $`
    E = \frac{f}{2} N k_B T
-   $$
-
+   `$
 In the simulation, we initialize the particles with velocities that follow a random distribution, and their interactions lead to a distribution that approximates the Maxwell-Boltzmann distribution over time. The `calculate_properties` function computes the average speed, temperature, and entropy of the system:
 
 ```python
@@ -123,7 +127,6 @@ def calculate_properties(particles):
 ```
 
 These calculations allow us to study the evolution of the system's macroscopic properties and validate the principles of thermodynamics and statistical mechanics.
-
 
 ### Collisions
 
@@ -227,7 +230,9 @@ Energy dissipation is considered in the simulation to account for non-ideal coll
 ## Simulation Parameters
 
 The simulation parameters can be adjusted in the `run.py` script. Here are the key parameters that can be modified:
+
 <!-- n, box_size, steps, initial_speed, particle_radius -->
+
 - `n`: The number of particles in the simulation.
 - `box_size`: The size of the square box in which the particles are confined.
 - `steps`: The number of simulation steps to run.
@@ -251,6 +256,7 @@ run_simulation(n, box_size, steps, initial_speed, particle_radius)
 ## Output
 
 The simulation generates a an animation of the particle motion, a plot of the average speed, temperature, and entropy over time, and a plot of collisions.
+
 - `particles_simulation.mp4`: An animation showing the motion of the particles in the box.
 - `average_speed_temperature_entropy.png`: A plot showing the average speed, temperature, and entropy of the system over time.
 - `collision_frequency.png`: A plot showing the number of collisions that occur in each time step.
@@ -276,7 +282,8 @@ Below is a sample output of the simulation:
 This project provides a detailed simulation of particle behavior in a confined space, considering various physical properties and interactions. It serves as a useful tool for studying the dynamics of particle systems and the evolution of entropy and temperature over time.
 
 ## Note
-*Currently the model has not been fully quantized. Although the model is based on the principles of statistical mechanics and thermodynamics, the simulation is not a direct representation of a real-world system. The model can be further refined by considering additional factors such as intermolecular forces, particle interactions, and external fields.*
+
+_Currently the model has not been fully quantized. Although the model is based on the principles of statistical mechanics and thermodynamics, the simulation is not a direct representation of a real-world system. The model can be further refined by considering additional factors such as intermolecular forces, particle interactions, and external fields._
 
 ## License
 
