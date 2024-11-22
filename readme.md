@@ -60,27 +60,23 @@ Parameters such as the number of particles, box size, initial temperature, dissi
 
 Entropy is a measure of the disorder or randomness in a system. In this simulation, we calculate the entropy from the kinetic energy of the particles:
 
-$$ Kinetics Energy (E*k) = \sum*{i=1}^{N} \frac{1}{2} m v_i^2 $$
+$` Kinetics Energy (E_k) = \sum*{i=1}^{N} \frac{1}{2} m v_i^2 `$
 
-$$ Entropy = \frac{1}{2} k_B \log\left(\frac{2\pi e m}{h^2}\right) + \frac{3}{2} k_B \log\left(\frac{E_k}{N}\right) $$
+$` Entropy = \frac{1}{2} k_B \log\left(\frac{2\pi e m}{h^2}\right) + \frac{3}{2} k_B \log\left(\frac{E_k}{N}\right) `$
 
 ### Temperature
 
 Temperature is a measure of the average kinetic energy of the particles in a system. In the context of our simulation, each particle has its own kinetic energy, which is calculated as:
 
-$$
-`
+$`
 E_k = \frac{1}{2} m v^2
-`
-$$
+`$
 
 where \( m \) is the mass of the particle and \( v \) is its velocity. The temperature \( T \) of the system can be derived from the average kinetic energy of the particles using the relation:
 
-$$
-`
+$`
 T = \frac{2}{3k_B} \left\langle E_k \right\rangle
-`
-$$
+`$
 
 where \( k_B \) is the Boltzmann constant and \( \left\langle E_k \right\rangle \) is the average kinetic energy of the particles. In the code, this is implemented in the `update_kinetic_energy_and_temperature` method of the `Particle` class:
 
@@ -116,7 +112,7 @@ Thermodynamics and statistical mechanics provide the theoretical framework for u
    $`
    E = \frac{f}{2} N k_B T
    `$
-In the simulation, we initialize the particles with velocities that follow a random distribution, and their interactions lead to a distribution that approximates the Maxwell-Boltzmann distribution over time. The `calculate_properties` function computes the average speed, temperature, and entropy of the system:
+   In the simulation, we initialize the particles with velocities that follow a random distribution, and their interactions lead to a distribution that approximates the Maxwell-Boltzmann distribution over time. The `calculate_properties` function computes the average speed, temperature, and entropy of the system:
 
 ```python
 def calculate_properties(particles):
